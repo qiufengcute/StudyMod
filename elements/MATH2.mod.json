@@ -1,0 +1,122 @@
+{
+  "_fv": 79,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 400,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_xxxxxxxxxxxxxxx",
+          "text": {
+            "fixedValue": "Given that a = 3, b = -2, then the value of a² - 2ab + b² is?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 54,
+          "y": 78,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_axxx",
+          "text": "A.1",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 127,
+          "y": 101,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_bxxx",
+          "text": "B.25",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 227,
+          "y": 101,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_cxxx",
+          "text": "C.49",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "AC"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 127,
+          "y": 144,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_dxxx",
+          "text": "D.7",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 227,
+          "y": 145,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_get_can_close_text",
+          "text": {
+            "fixedValue": "",
+            "name": "GetCanCloseText"
+          },
+          "color": {
+            "value": -16711732,
+            "falpha": 0.0
+          },
+          "x": 23,
+          "y": 56,
+          "locked": false
+        }
+      }
+    ],
+    "onClosed": {
+      "name": "ExerciseClose"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

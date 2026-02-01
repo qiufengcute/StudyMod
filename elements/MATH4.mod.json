@@ -1,0 +1,122 @@
+{
+  "_fv": 79,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 300,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_xxxxxxxxxxxxxxx",
+          "text": {
+            "fixedValue": "Price up 20% then 20% off. Final price vs original?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 76,
+          "y": 62,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_axxx",
+          "text": "A.Same",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 127,
+          "y": 101,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_bxxx",
+          "text": "B.Down 4%",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "AC"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 227,
+          "y": 101,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_cxxx",
+          "text": "C.Down 6%",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 52,
+          "height": 20,
+          "x": 127,
+          "y": 150,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_dxxx",
+          "text": "D.Up 4%",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 229,
+          "y": 151,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_get_can_close_text",
+          "text": {
+            "fixedValue": "",
+            "name": "GetCanCloseText"
+          },
+          "color": {
+            "value": -16711732,
+            "falpha": 0.0
+          },
+          "x": 72,
+          "y": 49,
+          "locked": false
+        }
+      }
+    ],
+    "onClosed": {
+      "name": "ExerciseClose"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

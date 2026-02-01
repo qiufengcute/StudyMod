@@ -1,0 +1,122 @@
+{
+  "_fv": 79,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 400,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_xxxxxxxxxxxxxxx",
+          "text": {
+            "fixedValue": "Probability of \"one head, one tail\" when tossing two fair coins."
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 30,
+          "y": 70,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_axxx",
+          "text": "A.1/4",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 127,
+          "y": 101,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_bxxx",
+          "text": "B.1/3",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 227,
+          "y": 102,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_cxxx",
+          "text": "C.1/2",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "AC"
+          },
+          "width": 52,
+          "height": 20,
+          "x": 126,
+          "y": 146,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_dxxx",
+          "text": "D.3/4",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 51,
+          "height": 20,
+          "x": 227,
+          "y": 145,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_get_can_close_text",
+          "text": {
+            "fixedValue": "",
+            "name": "GetCanCloseText"
+          },
+          "color": {
+            "value": -16711732,
+            "falpha": 0.0
+          },
+          "x": 24,
+          "y": 52,
+          "locked": false
+        }
+      }
+    ],
+    "onClosed": {
+      "name": "ExerciseClose"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

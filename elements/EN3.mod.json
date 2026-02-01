@@ -1,0 +1,122 @@
+{
+  "_fv": 79,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 340,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_xxxxxxxxxxxxxxx",
+          "text": {
+            "fixedValue": "Which of the following sentences uses the correct tense?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 64,
+          "y": 57,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_axxx",
+          "text": "A.I have seen that movie yesterday.",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 281,
+          "height": 20,
+          "x": 77,
+          "y": 82,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_bxxx",
+          "text": "B.She is liking to play basketball.",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 281,
+          "height": 20,
+          "x": 77,
+          "y": 108,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_cxxx",
+          "text": "C.He often is going to the library on weekends. ",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 278,
+          "height": 20,
+          "x": 79,
+          "y": 134,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_dxxx",
+          "text": "D.They will arrive here by 8 o’clock tomorrow morning.",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "AC"
+          },
+          "width": 311,
+          "height": 20,
+          "x": 59,
+          "y": 162,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_proc_get_can_close_text",
+          "text": {
+            "fixedValue": "",
+            "name": "GetCanCloseText"
+          },
+          "color": {
+            "value": -16711732,
+            "falpha": 0.0
+          },
+          "x": 49,
+          "y": 45,
+          "locked": false
+        }
+      }
+    ],
+    "onClosed": {
+      "name": "ExerciseClose"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}

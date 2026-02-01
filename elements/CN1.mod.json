@@ -1,0 +1,122 @@
+{
+  "_fv": 79,
+  "_type": "gui",
+  "definition": {
+    "type": 0,
+    "width": 400,
+    "height": 166,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 0,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "name": "label_xxxxxxxxxxxxxxx",
+          "text": {
+            "fixedValue": "Which landscape matches: \"Lone desert smoke, round river sun\"?"
+          },
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "x": 52,
+          "y": 59,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_axxx",
+          "text": "A.Jiangnan Water Town, Misty and Rainy",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 382,
+          "height": 20,
+          "x": 22,
+          "y": 73,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_bxxx",
+          "text": "B.Frontier Desert, Vast and Desolate",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "AC"
+          },
+          "width": 381,
+          "height": 20,
+          "x": 23,
+          "y": 103,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_cxxx",
+          "text": "C.Mountain Forest Morning Mist, Serene and Quiet",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 380,
+          "height": 20,
+          "x": 23,
+          "y": 130,
+          "locked": false
+        }
+      },
+      {
+        "type": "button",
+        "data": {
+          "name": "button_dxxx",
+          "text": "D.Seaside Sunrise, Vast and Magnificent",
+          "isUndecorated": false,
+          "onClick": {
+            "name": "WA"
+          },
+          "width": 383,
+          "height": 20,
+          "x": 22,
+          "y": 162,
+          "locked": false
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "name": "label_please_close_window",
+          "text": {
+            "fixedValue": "Please close window",
+            "name": "GetCanCloseText"
+          },
+          "color": {
+            "value": -16711732,
+            "falpha": 0.0
+          },
+          "x": 23,
+          "y": 43,
+          "locked": false
+        }
+      }
+    ],
+    "onClosed": {
+      "name": "ExerciseClose"
+    },
+    "gridSettings": {
+      "sx": 18,
+      "sy": 18,
+      "ox": 11,
+      "oy": 15,
+      "snapOnGrid": false
+    }
+  }
+}
