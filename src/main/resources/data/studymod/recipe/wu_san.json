@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "key": {
+    "a": "minecraft:paper",
+    "b": "minecraft:feather"
+  },
+  "result": {
+    "id": "studymod:wu_san_exercise",
+    "count": 1
+  }
+}

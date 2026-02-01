@@ -1,0 +1,10 @@
+{
+  "codelightogg": {
+    "sounds": [
+      {
+        "name": "studymod:codelight",
+        "stream": true
+      }
+    ]
+  }
+}
