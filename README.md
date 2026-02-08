@@ -107,4 +107,10 @@
 - Players who want exciting challenges in survival mode
 - Server owners looking for fun mini-games 
 - Players who enjoy quiz and knowledge games 
-- Modpack creators needing simple but engaging content 
+- Modpack creators needing simple but engaging content
+
+---
+
+## ⚠️ Important for Contributors
+If you intend to contribute code, **you MUST read**: [CONTRIBUTING.md](./CONTRIBUTING.md)
+Pay special attention to the hard requirements regarding the MCreator workflow.
