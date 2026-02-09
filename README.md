@@ -1,5 +1,7 @@
 # StudyMod
 
+![Icon](./StudyModIcon.png)
+
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/studymod?color=00AF5C&label=Modrinth&logo=modrinth)](https://modrinth.com/mod/studymod)
 [![GitHub License](https://img.shields.io/github/license/qiufengcute/StudyMod?color=yellow)](LICENSE)
 [![Minecraft Version](https://img.shields.io/badge/Minecraft-1.21.8--1.21.10-00AF5C?logo=minecraft)](https://modrinth.com/discover/mods?v=1.21.8&v=1.21.9&v=1.21.10)
