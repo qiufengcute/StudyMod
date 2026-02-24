@@ -3,14 +3,16 @@
   "id": "studymod",
   "version": "1.0.0",
   "name": "StudyMod",
+  "description": "Answer Chinese/Math/English questions. Earn Netherite or get struck by lightning! Fun quiz gameplay.",
   "authors": [
-    "MCreator"
+    "Qiufeng"
   ],
   "contact": {
-    "homepage": "https://mcreator.net",
+    "homepage": "https://modrinth.com/mod/studymod",
     "sources": ""
   },
-  "license": "Not specified",
+  "license": "MIT License",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
