@@ -1,6 +1,6 @@
 # Contribution Guidelines (Short but Critical)
 
-When submitting a Pull Request to the **`fabric` branch**:
+When submitting a Pull Request:
 
 1.  **Do NOT submit raw Java source files!**
 2.  **Do NOT submit raw Java source files!**
