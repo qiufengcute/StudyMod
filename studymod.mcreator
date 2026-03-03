@@ -322,8 +322,8 @@
       "metadata": {
         "dependencies": [
           {
-            "name": "world",
-            "type": "world"
+            "name": "entity",
+            "type": "entity"
           }
         ],
         "return_type": "string",
@@ -337,13 +337,13 @@
     {
       "name": "TempRandomNumber",
       "type": "number",
-      "scope": "map",
+      "scope": "player_persistent",
       "value": "0"
     },
     {
       "name": "IsOnExercise",
       "type": "logic",
-      "scope": "map",
+      "scope": "player_persistent",
       "value": "false"
     }
   ],

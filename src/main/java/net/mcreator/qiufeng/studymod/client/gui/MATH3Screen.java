@@ -69,7 +69,7 @@ public class MATH3Screen extends AbstractContainerScreen<MATH3Menu> implements S
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
 		guiGraphics.drawString(this.font, Component.translatable("gui.studymod.math_3.label_xxxxxxxxxxxxxxx"), 16, 33, -12829636, false);
-		guiGraphics.drawString(this.font, GetCanCloseTextProcedure.execute(world), 10, 15, -16711732, false);
+		guiGraphics.drawString(this.font, GetCanCloseTextProcedure.execute(entity), 10, 15, -16711732, false);
 	}
 
 	@Override

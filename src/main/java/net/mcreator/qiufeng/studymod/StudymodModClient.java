@@ -17,7 +17,7 @@ public class StudymodModClient implements ClientModInitializer {
 		// End of user code block mod constructor
 		StudymodModScreens.clientLoad();
 		StudymodModMenus.clientLoad();
-		ClientPlayNetworking.registerGlobalReceiver(StudymodModVariables.SavedDataSyncMessage.TYPE, StudymodModVariables.SavedDataSyncMessage::handleData);
+		ClientPlayNetworking.registerGlobalReceiver(StudymodModVariables.PlayerVariablesSyncMessage.TYPE, StudymodModVariables.PlayerVariablesSyncMessage::handleData);
 		// Start of user code block mod init
 		// End of user code block mod init
 	}

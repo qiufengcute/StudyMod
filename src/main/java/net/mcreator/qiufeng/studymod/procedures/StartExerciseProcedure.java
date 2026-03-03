@@ -26,15 +26,21 @@ public class StartExerciseProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity, ItemStack itemstack) {
 		if (entity == null)
 			return;
-		StudymodModVariables.MapVariables.get(world).IsOnExercise = true;
-		StudymodModVariables.MapVariables.get(world).markSyncDirty();
+		{
+			StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+			_vars.IsOnExercise = true;
+			_vars.markSyncDirty();
+		}
 		if (world instanceof ServerLevel _level) {
 			itemstack.hurtAndBreak(1, _level, null, _stkprov -> {
 			});
 		}
-		StudymodModVariables.MapVariables.get(world).TempRandomNumber = Mth.nextInt(RandomSource.create(), 1, 3);
-		StudymodModVariables.MapVariables.get(world).markSyncDirty();
-		if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 1) {
+		{
+			StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+			_vars.TempRandomNumber = Mth.nextInt(RandomSource.create(), 1, 3);
+			_vars.markSyncDirty();
+		}
+		if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 1) {
 			if (entity instanceof ServerPlayer _ent) {
 				BlockPos _bpos3 = BlockPos.containing(x, y, z);
 				_ent.openMenu(new MenuProvider() {
@@ -54,10 +60,13 @@ public class StartExerciseProcedure {
 					}
 				});
 			}
-		} else if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 2) {
-			StudymodModVariables.MapVariables.get(world).TempRandomNumber = Mth.nextInt(RandomSource.create(), 1, 4);
-			StudymodModVariables.MapVariables.get(world).markSyncDirty();
-			if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 1) {
+		} else if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 2) {
+			{
+				StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+				_vars.TempRandomNumber = Mth.nextInt(RandomSource.create(), 1, 4);
+				_vars.markSyncDirty();
+			}
+			if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 1) {
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos5 = BlockPos.containing(x, y, z);
 					_ent.openMenu(new MenuProvider() {
@@ -77,7 +86,7 @@ public class StartExerciseProcedure {
 						}
 					});
 				}
-			} else if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 2) {
+			} else if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 2) {
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos6 = BlockPos.containing(x, y, z);
 					_ent.openMenu(new MenuProvider() {
@@ -97,7 +106,7 @@ public class StartExerciseProcedure {
 						}
 					});
 				}
-			} else if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 3) {
+			} else if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 3) {
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos7 = BlockPos.containing(x, y, z);
 					_ent.openMenu(new MenuProvider() {
@@ -139,9 +148,12 @@ public class StartExerciseProcedure {
 				}
 			}
 		} else {
-			StudymodModVariables.MapVariables.get(world).TempRandomNumber = Mth.nextInt(RandomSource.create(), 1, 3);
-			StudymodModVariables.MapVariables.get(world).markSyncDirty();
-			if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 1) {
+			{
+				StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+				_vars.TempRandomNumber = Mth.nextInt(RandomSource.create(), 1, 3);
+				_vars.markSyncDirty();
+			}
+			if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 1) {
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos10 = BlockPos.containing(x, y, z);
 					_ent.openMenu(new MenuProvider() {
@@ -161,7 +173,7 @@ public class StartExerciseProcedure {
 						}
 					});
 				}
-			} else if (StudymodModVariables.MapVariables.get(world).TempRandomNumber == 2) {
+			} else if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).TempRandomNumber == 2) {
 				if (entity instanceof ServerPlayer _ent) {
 					BlockPos _bpos11 = BlockPos.containing(x, y, z);
 					_ent.openMenu(new MenuProvider() {

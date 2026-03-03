@@ -20,7 +20,7 @@ public class ExerciseCloseProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (StudymodModVariables.MapVariables.get(world).IsOnExercise) {
+		if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).IsOnExercise) {
 			if (entity instanceof Player _player && !_player.level().isClientSide()) {
 				_player.displayClientMessage(Component.literal("\u4F60\u5C45\u7136\u4E0D\u7B54\uFF01\u4E0D\u5141\u8BB8"), true);
 			}
@@ -31,8 +31,11 @@ public class ExerciseCloseProcedure {
 					_level.addFreshEntity(entityToSpawn_2);
 				}
 			}
-			StudymodModVariables.MapVariables.get(world).IsOnExercise = false;
-			StudymodModVariables.MapVariables.get(world).markSyncDirty();
+			{
+				StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+				_vars.IsOnExercise = false;
+				_vars.markSyncDirty();
+			}
 		}
 	}
 }

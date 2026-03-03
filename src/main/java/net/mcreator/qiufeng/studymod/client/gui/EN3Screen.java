@@ -69,7 +69,7 @@ public class EN3Screen extends AbstractContainerScreen<EN3Menu> implements Study
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
 		guiGraphics.drawString(this.font, Component.translatable("gui.studymod.en_3.label_xxxxxxxxxxxxxxx"), 20, 20, -12829636, false);
-		guiGraphics.drawString(this.font, GetCanCloseTextProcedure.execute(world), 5, 8, -16711732, false);
+		guiGraphics.drawString(this.font, GetCanCloseTextProcedure.execute(entity), 5, 8, -16711732, false);
 	}
 
 	@Override

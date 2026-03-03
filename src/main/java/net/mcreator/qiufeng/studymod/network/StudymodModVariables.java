@@ -1,162 +1,116 @@
 package net.mcreator.qiufeng.studymod.network;
 
-import net.minecraft.world.level.saveddata.SavedDataType;
-import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.HolderLookup;
 
+import net.mcreator.qiufeng.studymod.event.PlayerEvents;
 import net.mcreator.qiufeng.studymod.StudymodMod;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry;
+
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.mojang.serialization.Codec;
 
 public class StudymodModVariables {
+	public static final AttachmentType<PlayerVariables> PLAYER_VARIABLES = AttachmentRegistry.create(ResourceLocation.fromNamespaceAndPath(StudymodMod.MODID, "player_variables"),
+			(builder) -> builder.persistent(PlayerVariables.CODEC).initializer(PlayerVariables::new));
+
 	public static void variablesLoad() {
-		PayloadTypeRegistry.playS2C().register(SavedDataSyncMessage.TYPE, SavedDataSyncMessage.STREAM_CODEC);
+		PayloadTypeRegistry.playS2C().register(PlayerVariablesSyncMessage.TYPE, PlayerVariablesSyncMessage.STREAM_CODEC);
 		ServerPlayerEvents.JOIN.register((player) -> {
-			SavedData mapdata = MapVariables.get(player.level());
-			SavedData worlddata = WorldVariables.get(player.level());
-			if (mapdata != null)
-				ServerPlayNetworking.send(player, new SavedDataSyncMessage(0, mapdata));
-			if (worlddata != null)
-				ServerPlayNetworking.send(player, new SavedDataSyncMessage(1, worlddata));
+			ServerPlayNetworking.send(player, new PlayerVariablesSyncMessage(player.getAttachedOrCreate(PLAYER_VARIABLES)));
+		});
+		ServerPlayerEvents.AFTER_RESPAWN.register((oldPlayer, newPlayer, alive) -> {
+			ServerPlayNetworking.send(newPlayer, new PlayerVariablesSyncMessage(oldPlayer.getAttachedOrCreate(PLAYER_VARIABLES)));
 		});
 		ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
-			if (!destination.isClientSide()) {
-				SavedData worlddata = WorldVariables.get(player.level());
-				if (worlddata != null)
-					ServerPlayNetworking.send(player, new SavedDataSyncMessage(1, worlddata));
+			if (!destination.isClientSide())
+				ServerPlayNetworking.send(player, new PlayerVariablesSyncMessage(player.getAttachedOrCreate(PLAYER_VARIABLES)));
+		});
+		PlayerEvents.END_PLAYER_TICK.register((entity) -> {
+			if (entity instanceof ServerPlayer player && player.getAttachedOrCreate(PLAYER_VARIABLES)._syncDirty) {
+				ServerPlayNetworking.send(player, new PlayerVariablesSyncMessage(player.getAttachedOrCreate(PLAYER_VARIABLES)));
+				player.getAttachedOrCreate(PLAYER_VARIABLES)._syncDirty = false;
 			}
 		});
-		ServerTickEvents.END_WORLD_TICK.register((level) -> {
-			WorldVariables worldVariables = WorldVariables.get(level);
-			if (worldVariables._syncDirty) {
-				level.players().forEach(player -> ServerPlayNetworking.send(player, new SavedDataSyncMessage(1, worldVariables)));
-				worldVariables._syncDirty = false;
+		ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+			PlayerVariables original = oldPlayer.getAttachedOrCreate(PLAYER_VARIABLES);
+			PlayerVariables clone = new PlayerVariables();
+			clone.TempRandomNumber = original.TempRandomNumber;
+			clone.IsOnExercise = original.IsOnExercise;
+			if (alive) {
 			}
-			MapVariables mapVariables = MapVariables.get(level);
-			if (mapVariables._syncDirty) {
-				PlayerLookup.world(level).forEach(player -> ServerPlayNetworking.send(player, new SavedDataSyncMessage(0, mapVariables)));
-				mapVariables._syncDirty = false;
-			}
+			newPlayer.setAttached(PLAYER_VARIABLES, clone);
 		});
 	}
 
-	public static class WorldVariables extends SavedData {
-		public static final SavedDataType<WorldVariables> TYPE = new SavedDataType<>("studymod_worldvars", ctx -> new WorldVariables(), ctx -> CompoundTag.CODEC.xmap(tag -> {
-			WorldVariables instance = new WorldVariables();
-			instance.read(tag, ctx.levelOrThrow().registryAccess());
-			return instance;
-		}, instance -> instance.save(new CompoundTag(), ctx.levelOrThrow().registryAccess())), null);
-		boolean _syncDirty = false;
-
-		public void read(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
-		}
-
-		public CompoundTag save(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
-			return nbt;
-		}
-
-		public void markSyncDirty() {
-			this.setDirty();
-			this._syncDirty = true;
-		}
-
-		static WorldVariables clientSide = new WorldVariables();
-
-		public static WorldVariables get(LevelAccessor world) {
-			if (world instanceof ServerLevel level) {
-				return level.getDataStorage().computeIfAbsent(WorldVariables.TYPE);
-			} else {
-				return clientSide;
-			}
-		}
-	}
-
-	public static class MapVariables extends SavedData {
-		public static final SavedDataType<MapVariables> TYPE = new SavedDataType<>("studymod_mapvars", ctx -> new MapVariables(), ctx -> CompoundTag.CODEC.xmap(tag -> {
-			MapVariables instance = new MapVariables();
-			instance.read(tag, ctx.levelOrThrow().registryAccess());
-			return instance;
-		}, instance -> instance.save(new CompoundTag(), ctx.levelOrThrow().registryAccess())), null);
+	public static class PlayerVariables {
+		public static final Codec<PlayerVariables> CODEC = RecordCodecBuilder.create(builder -> builder
+				.group(Codec.DOUBLE.fieldOf("TempRandomNumber").orElse(0d).forGetter((vars) -> vars.TempRandomNumber), Codec.BOOL.fieldOf("IsOnExercise").orElse(false).forGetter((vars) -> vars.IsOnExercise)).apply(builder, PlayerVariables::new));
 		boolean _syncDirty = false;
 		public double TempRandomNumber = 0;
 		public boolean IsOnExercise = false;
 
-		public void read(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
-			TempRandomNumber = nbt.getDoubleOr("TempRandomNumber", 0);
-			IsOnExercise = nbt.getBooleanOr("IsOnExercise", false);
+		public PlayerVariables() {
 		}
 
-		public CompoundTag save(CompoundTag nbt, HolderLookup.Provider lookupProvider) {
-			nbt.putDouble("TempRandomNumber", TempRandomNumber);
-			nbt.putBoolean("IsOnExercise", IsOnExercise);
-			return nbt;
+		public PlayerVariables(double TempRandomNumber, boolean IsOnExercise) {
+			this.TempRandomNumber = TempRandomNumber;
+			this.IsOnExercise = IsOnExercise;
+		}
+
+		public void serialize(ValueOutput output) {
+			output.putDouble("TempRandomNumber", TempRandomNumber);
+			output.putBoolean("IsOnExercise", IsOnExercise);
+		}
+
+		public void deserialize(ValueInput input) {
+			TempRandomNumber = input.getDoubleOr("TempRandomNumber", 0);
+			IsOnExercise = input.getBooleanOr("IsOnExercise", false);
 		}
 
 		public void markSyncDirty() {
-			this.setDirty();
-			this._syncDirty = true;
-		}
-
-		static MapVariables clientSide = new MapVariables();
-
-		public static MapVariables get(LevelAccessor world) {
-			if (world instanceof ServerLevelAccessor serverLevelAccessor) {
-				return serverLevelAccessor.getLevel().getServer().getLevel(Level.OVERWORLD).getDataStorage().computeIfAbsent(MapVariables.TYPE);
-			} else {
-				return clientSide;
-			}
+			_syncDirty = true;
 		}
 	}
 
-	public record SavedDataSyncMessage(int dataType, SavedData data) implements CustomPacketPayload {
-		public static final Type<SavedDataSyncMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(StudymodMod.MODID, "saved_data_sync"));
-		public static final StreamCodec<RegistryFriendlyByteBuf, SavedDataSyncMessage> STREAM_CODEC = StreamCodec.of((RegistryFriendlyByteBuf buffer, SavedDataSyncMessage message) -> {
-			buffer.writeInt(message.dataType);
-			if (message.data instanceof MapVariables mapVariables)
-				buffer.writeNbt(mapVariables.save(new CompoundTag(), buffer.registryAccess()));
-			else if (message.data instanceof WorldVariables worldVariables)
-				buffer.writeNbt(worldVariables.save(new CompoundTag(), buffer.registryAccess()));
+	public record PlayerVariablesSyncMessage(PlayerVariables data) implements CustomPacketPayload {
+		public static final Type<PlayerVariablesSyncMessage> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(StudymodMod.MODID, "player_variables_sync"));
+		public static final StreamCodec<RegistryFriendlyByteBuf, PlayerVariablesSyncMessage> STREAM_CODEC = StreamCodec.of((RegistryFriendlyByteBuf buffer, PlayerVariablesSyncMessage message) -> {
+			TagValueOutput output = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+			message.data.serialize(output);
+			buffer.writeNbt(output.buildResult());
 		}, (RegistryFriendlyByteBuf buffer) -> {
-			int dataType = buffer.readInt();
-			CompoundTag nbt = buffer.readNbt();
-			SavedData data = null;
-			if (nbt != null) {
-				data = dataType == 0 ? new MapVariables() : new WorldVariables();
-				if (data instanceof MapVariables mapVariables)
-					mapVariables.read(nbt, buffer.registryAccess());
-				else if (data instanceof WorldVariables worldVariables)
-					worldVariables.read(nbt, buffer.registryAccess());
-			}
-			return new SavedDataSyncMessage(dataType, data);
+			PlayerVariablesSyncMessage message = new PlayerVariablesSyncMessage(new PlayerVariables());
+			message.data.deserialize(TagValueInput.create(ProblemReporter.DISCARDING, buffer.registryAccess(), buffer.readNbt()));
+			return message;
 		});
 
 		@Override
-		public Type<SavedDataSyncMessage> type() {
+		public Type<PlayerVariablesSyncMessage> type() {
 			return TYPE;
 		}
 
-		public static void handleData(final SavedDataSyncMessage message, final ClientPlayNetworking.Context context) {
+		public static void handleData(final PlayerVariablesSyncMessage message, final ClientPlayNetworking.Context context) {
 			if (message.data != null) {
 				context.client().execute(() -> {
-					if (message.dataType == 0)
-						MapVariables.clientSide.read(((MapVariables) message.data).save(new CompoundTag(), context.player().registryAccess()), context.player().registryAccess());
-					else
-						WorldVariables.clientSide.read(((WorldVariables) message.data).save(new CompoundTag(), context.player().registryAccess()), context.player().registryAccess());
+					TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, context.player().registryAccess());
+					message.data.serialize(output);
+					context.player().getAttachedOrCreate(PLAYER_VARIABLES).deserialize(TagValueInput.create(ProblemReporter.DISCARDING, context.player().registryAccess(), output.buildResult()));
 				});
 			}
 		}

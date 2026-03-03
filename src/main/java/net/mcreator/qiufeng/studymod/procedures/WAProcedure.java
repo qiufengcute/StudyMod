@@ -20,7 +20,7 @@ public class WAProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (StudymodModVariables.MapVariables.get(world).IsOnExercise) {
+		if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).IsOnExercise) {
 			if (entity instanceof Player _player && !_player.level().isClientSide()) {
 				_player.displayClientMessage(Component.literal("\u5F88\u9057\u61BE \u7B54\u9519\u4E86"), true);
 			}
@@ -35,7 +35,10 @@ public class WAProcedure {
 				_player.containerMenu = _player.inventoryMenu;
 			}
 		}
-		StudymodModVariables.MapVariables.get(world).IsOnExercise = false;
-		StudymodModVariables.MapVariables.get(world).markSyncDirty();
+		{
+			StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+			_vars.IsOnExercise = false;
+			_vars.markSyncDirty();
+		}
 	}
 }

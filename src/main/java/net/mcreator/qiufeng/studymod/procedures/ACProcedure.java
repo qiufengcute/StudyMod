@@ -20,7 +20,7 @@ public class ACProcedure {
 	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
 		if (entity == null)
 			return;
-		if (StudymodModVariables.MapVariables.get(world).IsOnExercise) {
+		if (entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES).IsOnExercise) {
 			if (entity instanceof Player _player) {
 				_player.containerMenu = _player.inventoryMenu;
 			}
@@ -45,7 +45,10 @@ public class ACProcedure {
 				_player.containerMenu = _player.inventoryMenu;
 			}
 		}
-		StudymodModVariables.MapVariables.get(world).IsOnExercise = false;
-		StudymodModVariables.MapVariables.get(world).markSyncDirty();
+		{
+			StudymodModVariables.PlayerVariables _vars = entity.getAttachedOrCreate(StudymodModVariables.PLAYER_VARIABLES);
+			_vars.IsOnExercise = false;
+			_vars.markSyncDirty();
+		}
 	}
 }
